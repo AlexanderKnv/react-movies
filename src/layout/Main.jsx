@@ -15,12 +15,18 @@ class Main extends React.Component {
         )
     }
 
+    searchMovies = (str) => {
+        fetch(`https://www.omdbapi.com/?apikey=64205d2&s=${str}`)
+            .then((response) => response.json())
+            .then((data) => this.setState({ movies: data.Search }))
+    };
+
     render() {
         const { movies } = this.state;
 
         return (
             <main className='container content'>
-                <Search />
+                <Search searchMovies={this.searchMovies}/>
                 {
                     movies.length ? (<Movies movies={this.state.movies}/>) : <Preloader />
                 }
